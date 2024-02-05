@@ -18,14 +18,18 @@ def create_and_populate_database():
 
 def vulnerable_query(username):
     # Vulnerable code with improperly escaped user input
-    query = "SELECT * FROM users WHERE username = '" + username + "'"
+    # query = "SELECT * FROM users WHERE username = '" + username + "'"
+    # SECURE CODE: (uses parameter instead)
+    query = "select * from users where username = ?"
 
     # Connecting to the database
     connection = sqlite3.connect("example.db")
     cursor = connection.cursor()
 
     # Executing the vulnerable query
-    cursor.execute(query)
+    # cursor.execute(query)
+    # SECURE way to execute the query with parameters:
+    cursor.execute(query, (username,))
 
     # Fetching the results
     results = cursor.fetchall()
@@ -39,8 +43,8 @@ def vulnerable_query(username):
 create_and_populate_database()
 
 # Test the vulnerable query
-user_input = input("Enter username: ") # Enter:  ' OR '1'='1' -- 
-result = vulnerable_query(user_input)
+user_input = input("Enter username: ") 
+result = query(user_input)
 
 # Display the results
 print(result)
