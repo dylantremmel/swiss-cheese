@@ -3,6 +3,9 @@ import datetime
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = b'secret_key'
+# secure code
+app.config['SEC_SESSION_COOKIE'] = True 
+# i ran the script and it seems like the above line was the only change needed to make it secure
 
 # Simulated user data
 users = {
